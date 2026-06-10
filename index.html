@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dunston Business Village — Heritage meets modern business.</title>
+  <meta name="description" content="Award-winning serviced and managed offices set within 25 acres of Staffordshire countryside — five minutes from the M6. From 200 to 10,000+ sq ft, flexible terms from three months.">
+  <meta name="theme-color" content="#1C3829">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dunston Business Village">
+  <meta property="og:description" content="Eight restored heritage buildings. One remarkable estate. Serviced &amp; managed offices in Staffordshire.">
+  <meta property="og:image" content="assets/dbv-logo-stacked.png">
+
+  <!-- Inline SVG favicon (no external file needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231C3829'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23C8B89A' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="css/kit.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* App-level overrides */
+    .container { max-width: 1280px; }
+    :focus:not(:focus-visible) { outline: none; }
+    a.btn { text-decoration: none; }
+    #root { display: block; min-height: 100vh; }
+    body { background: var(--dbv-cream); }
+    a { border-bottom: 0; }
+  </style>
+
+  <!-- React + Babel (pinned, integrity-checked, from unpkg public CDN) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Core -->
+  <script type="text/babel" src="src/Icons.jsx"></script>
+  <script type="text/babel" src="src/Router.jsx"></script>
+  <script type="text/babel" src="src/Shared.jsx"></script>
+  <script type="text/babel" src="src/Header.jsx"></script>
+  <script type="text/babel" src="src/Footer.jsx"></script>
+  <script src="src/Animations.js" defer></script>
+
+  <!-- Data + pages -->
+  <script src="src/data/businesses.js"></script>
+  <script type="text/babel" src="src/HomeSectionsA.jsx"></script>
+  <script type="text/babel" src="src/HomeSectionsB.jsx"></script>
+  <script type="text/babel" src="src/Homepage.jsx"></script>
+  <script type="text/babel" src="src/SpacesPage.jsx"></script>
+  <script type="text/babel" src="src/AmenitiesPage.jsx"></script>
+  <script type="text/babel" src="src/LocationPage.jsx"></script>
+  <script type="text/babel" src="src/AboutPage.jsx"></script>
+  <script type="text/babel" src="src/CommunityPage.jsx"></script>
+  <script type="text/babel" src="src/VisionPage.jsx"></script>
+  <script type="text/babel" src="src/ContactPage.jsx"></script>
+  <script type="text/babel" src="src/DirectoryPage.jsx"></script>
+  <script type="text/babel" src="src/SiteMapData.jsx"></script>
+  <script type="text/babel" src="src/SiteMapSvg.jsx"></script>
+  <script type="text/babel" src="src/SiteMapPage.jsx"></script>
+
+  <!-- App boot -->
+  <script type="text/babel">
+    window.PAGES_REGISTRY = window.PAGES_REGISTRY || {};
+    window.PAGES_REGISTRY.home = Homepage;
+
+    function App() {
+      return (
+        <RouterProvider>
+          <Header />
+          <main data-screen-label="DBV">
+            <PageOutlet />
+          </main>
+          <Footer />
+        </RouterProvider>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

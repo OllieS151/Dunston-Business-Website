@@ -1,0 +1,157 @@
+/* Animations layer — kept subtle and accessible.
+   prefers-reduced-motion: reduce kills everything. */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ───────── Reveal-on-scroll (single element) ─────────
+     A class is added by JS once the element is observed,
+     so initial paint is never blank.  */
+  .reveal-prep {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity .85s cubic-bezier(.2,.6,.2,1),
+      transform .85s cubic-bezier(.2,.6,.2,1);
+    will-change: opacity, transform;
+  }
+  .reveal-prep.in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ───────── Staggered children ─────────
+     Direct children of <section> .container are revealed in sequence.
+     We cap the delay so big grids never feel laggy. */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity .7s cubic-bezier(.2,.6,.2,1),
+      transform .7s cubic-bezier(.2,.6,.2,1);
+  }
+  .reveal-stagger.in-view > * {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-stagger.in-view > *:nth-child(1)      { transition-delay: 0ms; }
+  .reveal-stagger.in-view > *:nth-child(2)      { transition-delay: 70ms; }
+  .reveal-stagger.in-view > *:nth-child(3)      { transition-delay: 140ms; }
+  .reveal-stagger.in-view > *:nth-child(4)      { transition-delay: 210ms; }
+  .reveal-stagger.in-view > *:nth-child(5)      { transition-delay: 280ms; }
+  .reveal-stagger.in-view > *:nth-child(6)      { transition-delay: 350ms; }
+  .reveal-stagger.in-view > *:nth-child(n+7)    { transition-delay: 420ms; }
+
+  /* ───────── Page transition ─────────
+     PageOutlet wraps the active page in a keyed div with this class. */
+  .anim-page-enter {
+    animation: pageEnter .42s cubic-bezier(.2,.6,.2,1) both;
+  }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ───────── Megamenu pop ───────── */
+  .anim-menu-pop {
+    animation: menuPop .22s cubic-bezier(.2,.6,.2,1) both;
+    transform-origin: top center;
+  }
+  @keyframes menuPop {
+    from { opacity: 0; transform: translateY(-6px) scale(.985); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ───────── Detail-panel slide-up ───────── */
+  .anim-slide-up {
+    animation: slideUp .32s cubic-bezier(.2,.6,.2,1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ───────── Tooltip / chip fade-in ───────── */
+  .anim-fade-in {
+    animation: fadeIn .25s cubic-bezier(.2,.6,.2,1) both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ───────── Soft hover lifts ─────────
+     Light enough to feel "alive" without being noisy.
+     Specificity is high enough to beat inline-style transitions. */
+  .btn {
+    transition:
+      transform .22s cubic-bezier(.2,.6,.2,1),
+      box-shadow .22s cubic-bezier(.2,.6,.2,1),
+      background-color .2s,
+      color .2s,
+      border-color .2s;
+  }
+  .btn:hover:not(:disabled)  { transform: translateY(-1px); }
+  .btn:active:not(:disabled) { transform: translateY(0); transition-duration: .08s; }
+
+  /* SVG building hover — slight scale */
+  g.building rect:first-of-type + rect {
+    transition: filter .25s ease;
+  }
+
+  /* Inline links — underline grows from left */
+  a.link-italic {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    transition: background-size .25s cubic-bezier(.2,.6,.2,1);
+  }
+  a.link-italic:hover {
+    background-size: 100% 2px;
+  }
+
+  /* Image-grain blocks ease in slightly on parent hover */
+  .grain {
+    transition: transform .6s cubic-bezier(.2,.6,.2,1), filter .4s;
+  }
+  article:hover > .grain {
+    transform: scale(1.015);
+  }
+
+  /* Field inputs — gentle focus glow */
+  .field-input,
+  .header-search input,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    transition:
+      border-color .2s cubic-bezier(.2,.6,.2,1),
+      box-shadow .2s cubic-bezier(.2,.6,.2,1),
+      background-color .2s;
+  }
+
+  /* Accordion / details — smooth-ish expansion via marker rotate is handled inline.
+     Just polish the marker. */
+  details > summary {
+    transition: color .2s;
+  }
+}
+
+/* ───────── Reduced motion — disable everything ───────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:   0.001ms !important;
+    animation-iteration-count: 1   !important;
+    transition-duration:  0.001ms !important;
+    scroll-behavior:      auto    !important;
+  }
+  .reveal-prep,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
